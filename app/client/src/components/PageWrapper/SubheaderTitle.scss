@@ -1,0 +1,22 @@
+.subheader-title {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+
+  &__title {
+    color: #181c32;
+    margin: 0;
+  }
+
+  &__description {
+    color: #9096b8;
+    font-weight: 500;
+  }
+
+  &__separator {
+    display: block;
+    width: 1px;
+    height: 25px;
+    background: #adb1c7;
+  }
+}

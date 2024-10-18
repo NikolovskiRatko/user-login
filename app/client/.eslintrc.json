@@ -1,0 +1,55 @@
+{
+  "env": {
+    "browser": true,
+    "es2021": true,
+    "node": true
+  },
+  "parser": "vue-eslint-parser",
+  "parserOptions": {
+    "parser": "@typescript-eslint/parser",
+    "sourceType": "module"
+  },
+  "extends": [
+    "eslint:recommended",
+    "plugin:vue/vue3-essential",
+    "@vue/eslint-config-typescript",
+    "@vue/eslint-config-prettier",
+    "plugin:import/errors",
+    "plugin:import/warnings"
+  ],
+  "plugins": ["import"],
+  "rules": {
+    "@typescript-eslint/no-unused-vars": "warn",
+    "import/order": [
+      "warn",
+      {
+        "alphabetize": {
+          "order": "asc"
+        }
+      }
+    ]
+  },
+  "ignorePatterns": ["**/starter-core/*"],
+  "settings": {
+    "import/resolver": {
+      "alias": {
+        "map": [
+          ["@/components", "./src/components"],
+          ["@/composables", "./src/composables"],
+          ["@/constants", "./src/constants"],
+          ["@/helpers", "./src/helpers"],
+          ["@/locales", "./src/locales"],
+          ["@/pages", "./src/pages"],
+          ["@/plugins", "./src/plugins"],
+          ["@/router", "./src/router"],
+          ["@/store", "./src/store"],
+          ["@/types", "./src/types"]
+        ],
+        "extensions": [".js", ".jsx", ".ts", ".tsx", ".vue"]
+      },
+      "node": {
+        "extensions": [".js", ".jsx", ".ts", ".tsx", ".vue"]
+      }
+    }
+  }
+}
