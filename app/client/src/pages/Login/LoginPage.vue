@@ -89,7 +89,7 @@
 <template>
   <div class="auth-login">
     <div class="auth-base__head">
-      <h3 class="auth-base__title">Login 1.3</h3>
+      <h3 class="auth-base__title">Login Form</h3>
     </div>
     <form class="kt-form auth-base__form" @submit.prevent="submitForm">
       <!-- Email Field -->
@@ -164,5 +164,11 @@
         </button>
       </div>
     </form>
+    <div class="auth-base__account">
+      <span class="auth-base__account-msg"> Don't have an account yet ? </span>
+      <router-link to="/register" class="auth-base__account-link">
+        Sign Up!
+      </router-link>
+    </div>
   </div>
 </template>

@@ -13,7 +13,7 @@ docker exec -it node /bin/bash
 Then in folder within the node container **app/client** run the following commands:
 
 ```shell
-npm install && npm run dev && npm run dev
+npm install && npm run dev
 ```
 
 ## Production

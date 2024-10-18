@@ -16,6 +16,13 @@ const Login = () =>
     "@/pages/Login/LoginPage.vue"
   );
 
+const Register = () =>
+  import(
+    /* webpackChunkName: "register" */
+    /* webpackPrefetch: true */
+    "@/pages/Register/RegisterPage.vue"
+  );
+
 export const authPaths: RouteRecordRaw = {
   path: "/",
   component: AuthBase,
@@ -29,6 +36,11 @@ export const authPaths: RouteRecordRaw = {
       path: "login",
       name: "login",
       component: Login,
+    },
+    {
+      path: "register",
+      name: "register",
+      component: Register,
     },
   ],
 };

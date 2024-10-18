@@ -9,6 +9,7 @@ class UserDTO
 {
     public string $first_name;
     public string $last_name;
+    public string $username;
     public string $email;
     public ?string $avatar_url;
     public ?string $avatar_thumbnail;
@@ -18,6 +19,7 @@ class UserDTO
     public array $permissions_array;
 
     public function __construct(
+        string $username,
         string $first_name,
         string $last_name,
         string $email,
@@ -30,6 +32,7 @@ class UserDTO
     ) {
         $this->first_name = $first_name;
         $this->last_name = $last_name;
+        $this->username = $username;
         $this->email = $email;
         $this->avatar_url = $avatar_url;
         $this->avatar_thumbnail = $avatar_thumbnail;
@@ -42,8 +45,7 @@ class UserDTO
     public static function fromRequest(Request $request): self
     {
         return new self(
-            $request->input('first_name'),
-            $request->input('last_name'),
+            $request->input('username',''),
             $request->input('email'),
             null,
             null,
@@ -57,12 +59,13 @@ class UserDTO
     public static function fromRequestForCreate(Request $request): self
     {
         return new self(
-            $request->input('first_name'),
-            $request->input('last_name'),
+            $request->input('username',''),
+            $request->input('first_name',''),
+            $request->input('last_name',''),
             $request->input('email'),
             null,
             null,
-            $request->input('role'),
+            $request->input('role',1),
             id: 0,
             is_disabled: false,
             permissions_array: $request->input('permissions_array', [])
@@ -72,6 +75,7 @@ class UserDTO
     public static function fromModel(User $user): self
     {
         return new self(
+            $user->username,
             $user->first_name,
             $user->last_name,
             $user->email,
@@ -92,6 +96,7 @@ class UserDTO
     public function toArray(): array
     {
         return [
+            'username' => $this->username,
             'first_name' => $this->first_name,
             'last_name' => $this->last_name,
             'email' => $this->email,

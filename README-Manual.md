@@ -1,6 +1,6 @@
-## Run Development Environment
+# Run Development Environment And Build Application (MANUALLY)
 
-### Prerequisites
+## Prerequisites
 
 1. Install Docker Compose and Git locally.
 2. Append the dev domain name `127.0.0.1   starter.test` in `/etc/hosts`:

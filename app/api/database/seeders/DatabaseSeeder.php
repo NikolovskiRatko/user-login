@@ -21,6 +21,7 @@ class DatabaseSeeder extends Seeder
     {
         $admin = User::create([
             'first_name' => 'Admin',
+            'username' => 'Admin',
             'last_name' => 'Userot',
             'email' => 'admin@example.com',
             'password' => Hash::make('password')
@@ -28,6 +29,7 @@ class DatabaseSeeder extends Seeder
 
         $editor = User::create([
             'first_name' => 'Editor',
+            'username' => 'Editor',
             'last_name' => 'Userot',
             'email' => 'editor@example.com',
             'password' => Hash::make('password')
@@ -35,6 +37,7 @@ class DatabaseSeeder extends Seeder
 
         $collaborator = User::create([
             'first_name' => 'Collaborator',
+            'username' => 'Collaborator',
             'last_name' => 'Userot',
             'email' => 'collaborator@example.com',
             'password' => Hash::make('password')
@@ -67,6 +70,7 @@ class DatabaseSeeder extends Seeder
             $user = User::create([
                 'first_name' => $faker->name,
                 'last_name' => $faker->name,
+                'username' => $faker->name,
                 'email' => $faker->unique()->safeEmail,
                 'password' => $password,
                 // Other fields like 'first_name', 'last_name', etc., can be added here

@@ -51,6 +51,20 @@ setup_env:
 	else \
 		echo "$(API_DIR)/.env already exists. Skipping copy."; \
 	fi
+	# Create 'data' directory if it does not exist
+	@if [ ! -d $(DEV_ENV_DIR)/data ]; then \
+		mkdir $(DEV_ENV_DIR)/data; \
+		echo "Created $(DEV_ENV_DIR)/data directory"; \
+	else \
+		echo "$(DEV_ENV_DIR)/data directory already exists. Skipping creation."; \
+	fi
+	# Create 'logs' directory if it does not exist
+	@if [ ! -d $(DEV_ENV_DIR)/logs ]; then \
+		mkdir $(DEV_ENV_DIR)/logs; \
+		echo "Created $(DEV_ENV_DIR)/logs directory"; \
+	else \
+		echo "$(DEV_ENV_DIR)/logs directory already exists. Skipping creation."; \
+	fi
 	@echo "Environment variables setup process completed."
 
 # 2. Build Docker Images
@@ -115,12 +129,12 @@ clean:
 .PHONY: fix_permissions
 fix_permissions:
 	@echo "Fixing file permissions for Laravel API..."
-	sudo chown -R www-data:www-data $(API_DIR)
-	sudo find $(API_DIR) -type f -exec chmod 644 {} \;
-	sudo find $(API_DIR) -type d -exec chmod 755 {} \;
+	sudo chown -R $(USER):www-data $(API_DIR)
+	sudo find $(API_DIR) -type f -exec chmod 664 {} \;
+	sudo find $(API_DIR) -type d -exec chmod 775 {} \;
 	@echo "File permissions fixed successfully."
 
 # 10. Full Setup (All Steps)
 .PHONY: full_setup
-full_setup: setup_env build up install_api install_client migrate_seed
+full_setup: setup_env build up fix_permissions install_api install_client migrate_seed
 	@echo "Full setup completed successfully."

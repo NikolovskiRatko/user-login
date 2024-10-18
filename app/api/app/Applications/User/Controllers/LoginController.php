@@ -2,13 +2,29 @@
 
 namespace App\Applications\User\Controllers;
 
+use App\Applications\User\DTO\UserDTO;
+use App\Applications\User\Model\User;
+use App\Applications\User\Requests\LoginRequest;
+use App\Applications\User\Requests\NewUserRequest;
+use App\Applications\User\Requests\RegisterRequest;
+use App\Applications\User\Services\UserServiceInterface;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Validation\ValidationException;
 
+/**
+ * @property UserServiceInterface $userService
+ */
 class LoginController extends Controller
 {
+    protected $userService;
+
+    public function __construct(UserServiceInterface $userService)
+    {
+        $this->userService = $userService;
+    }
 
     /**
      * Handle an authentication attempt.
@@ -58,14 +74,36 @@ class LoginController extends Controller
             ->header('Access-Control-Expose-Headers', 'Authorization');;
     }
 
-    public function user(Request $request)
+    public function user(Request $request): JsonResponse
     {
-        $user = $request->user();
+        // Fetch the authenticated user
+        $user = User::find($request->user()->id);
 
-        // Add roles and permissions if needed
-        //        $user->roles = $user->roles_array();        // Assuming roles_array() is a method in your User model
-        //        $user->permissions = $user->permissions_array(); // Assuming permissions_array() is a method in your User model
+        if (!$user) {
+            return response()->json(['error' => 'User not found'], 404);
+        }
 
-        return $user;
+        // Convert the user model to a DTO (or format as needed)
+        $userDTO = UserDTO::fromModel($user);
+
+        // Return the user details as a JSON response
+        return response()->json(['user' => $userDTO], 200);
+    }
+
+
+    /**
+     * Register a new user.
+     */
+    public function register(NewUserRequest $request): JsonResponse
+    {
+        $userDTO = UserDTO::fromRequestForCreate($request);
+        $newUserDTO = $this->userService->create($userDTO, $request->input('password'));
+        $user = User::where('id',$newUserDTO->id)->get()->first;
+        $token = $user->createToken('api-token')->plainTextToken;
+
+        return response()
+            ->json(['user' => $newUserDTO], 201)
+            ->header('Authorization', $token)
+            ->header('Access-Control-Expose-Headers', 'Authorization');
     }
 }

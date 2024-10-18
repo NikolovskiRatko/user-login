@@ -4,6 +4,7 @@ namespace App\Applications\User\Controllers;
 
 use App\Applications\User\DTO\UserDTO;
 use App\Applications\User\Requests\MyProfileRequest;
+use App\Applications\User\Requests\UserRequest;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
 use Illuminate\Auth\Access\AuthorizationException;
@@ -67,10 +68,10 @@ class UserController extends Controller
     /**
      * Update user
      *
-     * @param  Request  $request
+     * @param  UserRequest  $request
      * @return JsonResponse
      */
-    public function update(Request $request): JsonResponse
+    public function update(UserRequest $request): JsonResponse
     {
         $userId = Route::current()->parameter('id');
         $dto = UserDTO::fromRequest($request);

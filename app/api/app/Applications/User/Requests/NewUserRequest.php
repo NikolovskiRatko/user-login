@@ -25,17 +25,21 @@ class NewUserRequest extends ApiFormRequest
     public function rules()
     {
         $rules = [
-            'first_name' => 'required|max:255|min:2',
-            'last_name' => 'required|max:255|min:2',
+//            'first_name' => 'required|max:255|min:2',
+//            'last_name' => 'required|max:255|min:2',
+            'username' => 'required|max:255|min:2',
             'email' => 'required|email|min:2|max:255|unique:users,email,'.$this->segment(3),
             'password' => 'sometimes|between:6,30|confirmed',
-            'roles' => 'required|exists:roles,id',
+//            'roles' => 'required|exists:roles,id',
         ];
 
         return $rules;
     }
     public function messages(){
         return [
+            'username.required' => 'users.username.required',
+            'username.max' => 'users.username.max',
+            'username.min' => 'users.username.min',
             'first_name.required' => 'users.first_name.required',
             'first_name.max' => 'users.first_name.max',
             'first_name.min' => 'users.first_name.min',

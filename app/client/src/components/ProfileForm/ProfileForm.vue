@@ -14,15 +14,13 @@
 
   // Form data
   const form = ref({
-    first_name: "",
-    last_name: "",
+    username: "",
     email: "",
   });
 
   // Form error messages
   const formErrors = ref({
-    first_name: "",
-    last_name: "",
+    username: "",
     email: "",
   });
 
@@ -33,8 +31,7 @@
   // Populate form with user data on mount
   onMounted(() => {
     if (user.value) {
-      form.value.first_name = user.value.first_name;
-      form.value.last_name = user.value.last_name;
+      form.value.username = user.value.username;
       form.value.email = user.value.email;
     }
   });
@@ -42,16 +39,11 @@
   // Validate the form fields
   const validateForm = (): boolean => {
     let isValid = true;
-    formErrors.value.first_name = "";
-    formErrors.value.last_name = "";
+    formErrors.value.username = "";
     formErrors.value.email = "";
 
-    if (!form.value.first_name.trim()) {
-      formErrors.value.first_name = "First name is required";
-      isValid = false;
-    }
-    if (!form.value.last_name.trim()) {
-      formErrors.value.last_name = "Last name is required";
+    if (!form.value.username.trim()) {
+      formErrors.value.username = "Username is required";
       isValid = false;
     }
     if (!form.value.email.trim()) {
@@ -79,11 +71,8 @@
       updateError.value = true;
       if (error.errors) {
         // Assign backend validation errors to form fields
-        formErrors.value.first_name = error.errors.first_name
-          ? error.errors.first_name[0]
-          : "";
-        formErrors.value.last_name = error.errors.last_name
-          ? error.errors.last_name[0]
+        formErrors.value.username = error.errors.username
+          ? error.errors.username[0]
           : "";
         formErrors.value.email = error.errors.email
           ? error.errors.email[0]
@@ -123,39 +112,21 @@
 
     <!-- Profile Form -->
     <form class="kt-form auth-base__form" @submit.prevent="submitForm">
-      <!-- First Name Field -->
+      <!-- Username Field -->
       <div class="input-group">
-        <label for="first_name" class="form-label">First Name</label>
+        <label for="username" class="form-label">Username</label>
         <input
-          v-model="form.first_name"
-          id="first_name"
+          v-model="form.username"
+          id="username"
           class="form-control"
           type="text"
-          placeholder="First Name"
-          name="first_name"
+          placeholder="Username"
+          name="username"
           autocomplete="off"
           required
         />
-        <span v-if="formErrors.first_name" class="error invalid-feedback">
-          {{ formErrors.first_name }}
-        </span>
-      </div>
-
-      <!-- Last Name Field -->
-      <div class="input-group">
-        <label for="last_name" class="form-label">Last Name</label>
-        <input
-          v-model="form.last_name"
-          id="last_name"
-          class="form-control"
-          type="text"
-          placeholder="Last Name"
-          name="last_name"
-          autocomplete="off"
-          required
-        />
-        <span v-if="formErrors.last_name" class="error invalid-feedback">
-          {{ formErrors.last_name }}
+        <span v-if="formErrors.username" class="error invalid-feedback">
+          {{ formErrors.username }}
         </span>
       </div>
 
